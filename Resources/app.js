@@ -22,6 +22,7 @@ searchView.addEventListener('submit', function() {
 			return;
 		}
 		const records = response.records.record.list;
+		
 		function getCover(data) {
 			if (Array.isArray(data['dc:identifier'].list)) {
 				var ids = {};
@@ -29,7 +30,7 @@ searchView.addEventListener('submit', function() {
 					ids[item['xsi:type']] = item.content;
 				});
 				console.log(ids);
-				return ids['dnb:IDN'] ? 'http://covers.openlibrary.org/b/idn/' + ids['dnb:IDN'] + '-M.jpg' : '';
+				return ids['dnb:IDN'] ? 'https://archive.org/services/img/:'+ids['dnb:IDN'] : '';
 			}
 		}
 
