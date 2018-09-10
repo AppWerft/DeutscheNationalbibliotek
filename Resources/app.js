@@ -1,5 +1,5 @@
 var win = Ti.UI.createWindow({
-	title : 'Deutsche National Bibliothek',
+	title : 'Deutsche Nationalbibliothek',
 	backgroundImage : '/assets/images/default.png'
 });
 
