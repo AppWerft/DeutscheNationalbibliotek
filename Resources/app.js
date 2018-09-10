@@ -51,65 +51,11 @@ searchView.addEventListener('submit', function() {
 });
 
 win.add(searchView);
-var myTemplate = {
-	childTemplates : [{// Image justified left
-		type : 'Ti.UI.ImageView', // Use an image view for the image
-		bindId : 'pic', // Maps to a custom pic property of the item data
-
-		properties : {// Sets the image view  properties
-			image : '/assets/images/dnb.png',
-			width : '50dp',
-			height : '50dp',
-			left : 0,
-			top : 10
-		}
-	}, {
-		type : 'Ti.UI.View',
-		properties : {
-			layout : 'vertical',
-			height : Ti.UI.SIZE,
-			left : '60dp',
-			right : 5,
-			top : 5,
-			bottom : 5
-		},
-		childTemplates : [{// Title
-			type : 'Ti.UI.Label', // Use a label for the title
-			bindId : 'title', // Maps to a custom info property of the item data
-			properties : {// Sets the label properties
-				textAlign : 'left',
-				width:Ti.UI.FILL,
-				color : '#317DBD',
-				font : {
-					fontFamily : 'Arial',
-					fontSize : '18dp',
-					fontWeight : 'bold'
-				},
-
-				top : 0,
-			}
-		}, {// Subtitle
-			type : 'Ti.UI.Label', // Use a label for the subtitle
-			bindId : 'creator', // Maps to a custom es_info property of the item data
-			properties : {// Sets the label properties
-				color : '#E05D61',
-				textAlign : 'left',
-				width:Ti.UI.FILL,
-				font : {
-					fontFamily : 'Arial',
-					fontSize : '14dp'
-				},
-				left : 0,
-				top : '5dp',
-			}
-		}]
-	}]
-};
 
 var listView = Ti.UI.createListView({
 	separatorColor : '#92CFE3',
 	templates : {
-		'template' : myTemplate
+		'template' : require('TEMPLATE')
 	},
 	defaultItemTemplate : 'template'
 
@@ -122,9 +68,7 @@ var sections = [];
 
 win.open();
 
-const SRU = require('de.appwerft.sru');
-
-const DNB = SRU.createEndpoint({
+const DNB =  require('de.appwerft.sru').createEndpoint({
 	url : "https://services.dnb.de/sru",
 	version : '1.1',
 	catalog : 'dnb',
