@@ -128,7 +128,7 @@ const DNB = SRU.createEndpoint({
 	url : "https://services.dnb.de/sru",
 	version : '1.1',
 	catalog : 'dnb',
-	accesstoken : require('accesstoken')
+	accesstoken : require('.accesstoken')
 });
 
 win.activity.onCreateOptionsMenu = function(e) {
