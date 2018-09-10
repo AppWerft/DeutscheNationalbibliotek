@@ -44,6 +44,7 @@
     <android xmlns:android="http://schemas.android.com/apk/res/android"/>
     <modules>
         <module platform="android">de.appwerft.sru</module>
+        <module platform="android">com.alcoapps.actionbarextras</module>
     </modules>
     <deployment-targets>
         <target device="android">true</target>

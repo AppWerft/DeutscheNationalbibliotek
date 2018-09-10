@@ -2,6 +2,7 @@
 "/Users/fuerst/Documents/MLearning/DeutscheNationalBibliothek/build/android/gen/android/support/design/R.java"
 "/Users/fuerst/Documents/MLearning/DeutscheNationalBibliothek/build/android/gen/android/support/v7/appcompat/R.java"
 "/Users/fuerst/Documents/MLearning/DeutscheNationalBibliothek/build/android/gen/android/support/v7/cardview/R.java"
+"/Users/fuerst/Documents/MLearning/DeutscheNationalBibliothek/build/android/gen/com/alcoapps/actionbarextras/R.java"
 "/Users/fuerst/Documents/MLearning/DeutscheNationalBibliothek/build/android/gen/de/appwerft/dnb/AssetCryptImpl.java"
 "/Users/fuerst/Documents/MLearning/DeutscheNationalBibliothek/build/android/gen/de/appwerft/dnb/DnbActivity.java"
 "/Users/fuerst/Documents/MLearning/DeutscheNationalBibliothek/build/android/gen/de/appwerft/dnb/DnbAppInfo.java"
