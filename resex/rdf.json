@@ -1,0 +1,120 @@
+const rdf={
+	"recordPosition" : 1,
+	"recordSchema" : "RDFxml",
+	"recordPacking" : "xml",
+	"recordData" : {
+		"rdf:RDF" : {
+			"xmlns:dcterms" : "http://purl.org/dc/terms/",
+			"xmlns:dcmitype" : "http://purl.org/dc/dcmitype/",
+			"xmlns:dnb_intern" : "http://dnb.de/",
+			"xmlns:schema" : "http://schema.org/",
+			"xmlns:editeur" : "https://ns.editeur.org/thema/",
+			"xmlns:geo" : "http://www.opengis.net/ont/geosparql#",
+			"xmlns:v" : "http://www.w3.org/2006/vcard/ns#",
+			"xmlns:gndo" : "http://d-nb.info/standards/elementset/gnd#",
+			"xmlns:marcRole" : "http://id.loc.gov/vocabulary/relators/",
+			"xmlns:sf" : "http://www.opengis.net/ont/sf#",
+			"xmlns:isbd" : "http://iflastandards.info/ns/isbd/elements/",
+			"xmlns:foaf" : "http://xmlns.com/foaf/0.1/",
+			"xmlns:owl" : "http://www.w3.org/2002/07/owl#",
+			"xmlns:lib" : "http://purl.org/library/",
+			"xmlns:dnbt" : "http://d-nb.info/standards/elementset/dnb#",
+			"xmlns:ebu" : "http://www.ebu.ch/metadata/ontologies/ebucore/ebucore#",
+			"xmlns:mo" : "http://purl.org/ontology/mo/",
+			"xmlns:rdau" : "http://rdaregistry.info/Elements/u/",
+			"xmlns:gbv" : "http://purl.org/ontology/gbv/",
+			"xmlns:vivo" : "http://vivoweb.org/ontology/core#",
+			"xmlns:bibo" : "http://purl.org/ontology/bibo/",
+			"xmlns:rdf" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+			"xmlns:dbp" : "http://dbpedia.org/property/",
+			"xmlns:umbel" : "http://umbel.org/umbel#",
+			"xmlns:skos" : "http://www.w3.org/2004/02/skos/core#",
+			"xmlns:rdfs" : "http://www.w3.org/2000/01/rdf-schema#",
+			"xmlns:dnba" : "http://d-nb.info/standards/elementset/agrelon#",
+			"rdf:Description" : {
+				"marcRole:aut" : {
+					"rdf:resource" : "http://d-nb.info/gnd/1038524334"
+				},
+				"rdau:P60333" : {
+					"rdf:datatype" : "http://www.w3.org/2001/XMLSchema#string",
+					"content" : "München : Examicus Verlag"
+				},
+				"rdau:P60163" : {
+					"rdf:datatype" : "http://www.w3.org/2001/XMLSchema#string",
+					"content" : "München"
+				},
+				"rdau:P60049" : {
+					"rdf:resource" : "http://rdaregistry.info/termList/RDAContentType/1020"
+				},
+				"rdau:P60493" : {
+					"rdf:datatype" : "http://www.w3.org/2001/XMLSchema#string",
+					"content" : "Naming, Logo- und Produktdesign als visueller Anker am Markt"
+				},
+				"rdau:P60048" : {
+					"rdf:resource" : "http://rdaregistry.info/termList/RDACarrierType/1018"
+				},
+				"foaf:isPrimaryTopicOf" : {
+					"rdf:datatype" : "http://www.w3.org/2001/XMLSchema#string",
+					"content" : "http://www.examicus.de/e-book/186289/marken-wirkungsvoll-inszenieren"
+				},
+				"dcterms:creator" : {
+					"rdf:resource" : "http://d-nb.info/gnd/1038524334"
+				},
+				"bibo:isbn13" : {
+					"rdf:datatype" : "http://www.w3.org/2001/XMLSchema#string",
+					"content" : 9783869431055
+				},
+				"dcterms:medium" : {
+					"rdf:resource" : "http://rdaregistry.info/termList/RDACarrierType/1018"
+				},
+				"rdf:type" : {
+					"rdf:resource" : "http://purl.org/ontology/bibo/Document"
+				},
+				"rdau:P60470" : {
+					"xml:lang" : "de",
+					"content" : "Lizenzpflichtig"
+				},
+				"rdau:P60050" : {
+					"rdf:resource" : "http://rdaregistry.info/termList/RDAMediaType/1003"
+				},
+				"rdf:about" : "http://d-nb.info/1038512956",
+				"umbel:isLike" : {
+					"rdf:resource" : "http://nbn-resolving.de/urn:nbn:de:101:1-2013082112875"
+				},
+				"dc:title" : {
+					"rdf:datatype" : "http://www.w3.org/2001/XMLSchema#string",
+					"content" : "Marken wirkungsvoll inszenieren"
+				},
+				"dcterms:language" : {
+					"rdf:resource" : "http://id.loc.gov/vocabulary/iso639-2/ger"
+				},
+				"owl:sameAs" : {
+					"rdf:resource" : "http://hub.culturegraph.org/resource/DNB-1038512956"
+				},
+				"dcterms:issued" : {
+					"rdf:datatype" : "http://www.w3.org/2001/XMLSchema#string",
+					"content" : 2012
+				},
+				"dc:identifier" : {
+					"list" : [{
+						"rdf:datatype" : "http://www.w3.org/2001/XMLSchema#string",
+						"content" : "(DE-101)1038512956"
+					}, {
+						"rdf:datatype" : "http://www.w3.org/2001/XMLSchema#string",
+						"content" : "(OCoLC)858027640"
+					}]
+				},
+				"rdau:P60327" : {
+					"rdf:datatype" : "http://www.w3.org/2001/XMLSchema#string",
+					"content" : "Sandra Schleevoigt"
+				},
+				"dc:publisher" : {
+					"rdf:datatype" : "http://www.w3.org/2001/XMLSchema#string",
+					"content" : "Examicus Verlag"
+				}
+			},
+			"xmlns:dc" : "http://purl.org/dc/elements/1.1/"
+		}
+	}
+};
+

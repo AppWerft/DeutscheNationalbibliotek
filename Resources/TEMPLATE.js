@@ -47,7 +47,22 @@ module.exports = {
 					fontSize : '14dp'
 				},
 				left : 0,
-				top : '5dp',
+				top : 0,
+			}
+		},{
+			type : 'Ti.UI.Label', // Use a label for the subtitle
+			bindId : 'publisher', // Maps to a custom es_info property of the item data
+			properties : {// Sets the label properties
+				color : '#D6CC4F',
+				textAlign : 'left',
+				width:Ti.UI.FILL,
+				font : {
+					fontFamily : 'Arial',
+					fontSize : '14dp',
+					fontStyle: 'italic'
+				},
+				left : 0,
+				top : 0,
 			}
 		}]
 	}]

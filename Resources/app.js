@@ -4,33 +4,33 @@ var win = Ti.UI.createWindow({
 });
 var abx = require('com.alcoapps.actionbarextras');
 var searchView = Ti.UI.Android.createSearchView({
-	hintText : "Search",
+	hintText : "Suche …",
 	top : 0
 });
 searchView.addEventListener('submit', function() {
+	menuItem.collapseActionView();
+	abx.setSubtitle('Suche nach „' + searchView.getValue() + '“');
 	DNB.searchretrieve({
 		query : searchView.getValue(),
 		maximumRecords : 100
 	}, function(e) {
-		searchView.blur();
 		const response = e.searchRetrieveResponse;
 		Ti.UI.createNotification({
 			message : response.numberOfRecords + ' Treffer',
 			duration : 3000
 		}).show();
 		if (!response.records.record) {
+			listView.sections.items = [];
 			return;
 		}
 		const records = response.records.record.list;
-		
 		function getCover(data) {
 			if (Array.isArray(data['dc:identifier'].list)) {
 				var ids = {};
 				data['dc:identifier'].list.forEach(function(item) {
 					ids[item['xsi:type']] = item.content;
 				});
-				console.log(ids);
-				return ids['dnb:IDN'] ? 'https://archive.org/services/img/:'+ids['dnb:IDN'] : '';
+				return ids['dnb:IDN'] ? 'https://archive.org/services/img/:' + ids['dnb:IDN'] : '';
 			}
 		}
 
@@ -42,18 +42,20 @@ searchView.addEventListener('submit', function() {
 			else if (data['dc:creator'] && Array.isArray(data['dc:creator'].list))
 				creator = data['dc:creator'].list.join(', ');
 			const cover = getCover(data);
-			console.log(cover);
 
 			const item = {
 				title : {
 					text : data['dc:title']
 				},
+				publisher : {
+					text : data['dc:publisher'] ? (data['dc:publisher'])  + ',  ' + data['dc:date'] : data['dc:date']
+				},
 				creator : {
 					text : creator
 				},
 				/*pic : {
-					image : getCover(data)
-				},*/
+				 image : getCover(data)
+				 },*/
 				properties : {
 					itemId : JSON.stringify(data),
 					accessoryType : Ti.UI.LIST_ACCESSORY_TYPE_DISCLOSURE
@@ -90,18 +92,23 @@ const DNB = require('de.appwerft.sru').createEndpoint({
 	url : "https://services.dnb.de/sru",
 	version : '1.1',
 	catalog : 'dnb',
-	accesstoken : require('.accesstoken')
+	recordSchema : 'oai_dc',
+	accesstoken : require('.accesstoken'),
+	explained : function(e) {
+	}
 });
+
 abx.setStatusbarColor('#D6CC50');
 abx.setBackgroundColor('#2E7CBD');
 abx.subtitle = "Suche im Gesamtbestand";
 
+var menuItem;
 win.activity.onCreateOptionsMenu = function(e) {
 	abx.setStatusbarColor('#D6CC50');
 	abx.setBackgroundColor('#2E7CBD');
 	abx.subtitle = "Suche im Gesamtbestand";
 	var menu = e.menu;
-	var menuItem = menu.add({
+	menuItem = menu.add({
 		title : 'Suche',
 		actionView : searchView,
 		icon : '/assets/images/lupe.png',
