@@ -7,84 +7,79 @@ var searchView = Ti.UI.Android.createSearchView({
 	hintText : "Suche …",
 	top : 0
 });
+var query='';
+var nextRecord = 0;
+const onLoad = function(e) {
+	const response = e.searchRetrieveResponse;
+	nextRecord= response.nextRecordPosition;
+	Ti.UI.createNotification({
+		message : (response.nextRecordPosition-1)+ '/'+ response.numberOfRecords + ' Treffer',
+		duration : 3000
+	}).show();
+	if (!response.records.record || !response.records.record.list) {
+		console.log(">>>>>>>>>>>");
+		listView.clear();
+		return;
+	}
+	const items = response.records.record.list.map(function(record) {
+		const data = record.recordData.dc;
+		var creator = "";
+		if (data['dc:creator'] && typeof data['dc:creator'] == "string")
+			creator = data['dc:creator'];
+		else if (data['dc:creator'] && Array.isArray(data['dc:creator'].list))
+			creator = data['dc:creator'].list.join(', ');
+		const item = {
+			title : {
+				text : data['dc:title']
+			},
+			publisher : {
+				text : data['dc:publisher'] ? (data['dc:publisher']) + ',  ' + data['dc:date'] : data['dc:date']
+			},
+			creator : {
+				text : creator
+			},
+			properties : {
+				itemId : JSON.stringify(data),
+				accessoryType : Ti.UI.LIST_ACCESSORY_TYPE_DISCLOSURE
+			}
+		};
+		return item;
+	});
+	listView.addSection(items);
+	listView.backgroundColor = 'white';
+};
+
 searchView.addEventListener('submit', function() {
 	menuItem.collapseActionView();
-	abx.setSubtitle('Suche nach „' + searchView.getValue() + '“');
+	query= searchView.getValue();
+	abx.setSubtitle('Suche nach „' + query + '“');
 	DNB.searchretrieve({
-		query : searchView.getValue(),
+		query : query,
 		maximumRecords : 100
-	}, function(e) {
-		const response = e.searchRetrieveResponse;
-		Ti.UI.createNotification({
-			message : response.numberOfRecords + ' Treffer',
-			duration : 3000
-		}).show();
-		if (!response.records.record) {
-			listView.sections.items = [];
-			return;
-		}
-		const records = response.records.record.list;
-		function getCover(data) {
-			if (Array.isArray(data['dc:identifier'].list)) {
-				var ids = {};
-				data['dc:identifier'].list.forEach(function(item) {
-					ids[item['xsi:type']] = item.content;
-				});
-				return ids['dnb:IDN'] ? 'https://archive.org/services/img/:' + ids['dnb:IDN'] : '';
-			}
-		}
-
-		const items = records.map(function(record) {
-			const data = record.recordData.dc;
-			var creator = "";
-			if (data['dc:creator'] && typeof data['dc:creator'] == "string")
-				creator = data['dc:creator'];
-			else if (data['dc:creator'] && Array.isArray(data['dc:creator'].list))
-				creator = data['dc:creator'].list.join(', ');
-			const cover = getCover(data);
-
-			const item = {
-				title : {
-					text : data['dc:title']
-				},
-				publisher : {
-					text : data['dc:publisher'] ? (data['dc:publisher'])  + ',  ' + data['dc:date'] : data['dc:date']
-				},
-				creator : {
-					text : creator
-				},
-				/*pic : {
-				 image : getCover(data)
-				 },*/
-				properties : {
-					itemId : JSON.stringify(data),
-					accessoryType : Ti.UI.LIST_ACCESSORY_TYPE_DISCLOSURE
-				}
-			};
-			return item;
-		});
-		listView.setSections([Ti.UI.createListSection({
-			items : items
-		})]);
-		listView.backgroundColor = 'white';
-	});
+	}, onLoad);
 });
 
 win.add(searchView);
 
-var listView = Ti.UI.createListView({
-	separatorColor : '#92CFE3',
-	templates : {
-		'template' : require('TEMPLATE')
-	},
-	defaultItemTemplate : 'template'
+var listView = require('listview')();
 
-});
 win.add(listView);
+
 listView.addEventListener('itemclick', function(e) {
 	console.log(e.itemId);
 });
-var sections = [];
+
+listView.addEventListener('scrollend', function(e) {
+	const ndx = e.visibleItemCount + e.firstVisibleItemIndex;
+	const section= e.firstVisibleSectionIndex;
+	console.log("ndx="+ndx + '  '+ section);
+	if (ndx>1 && ndx%100 == 0)
+		DNB.searchretrieve({
+			query : query,
+			maximumRecords : 100,
+			startRecord : nextRecord
+		}, onLoad);
+});
 
 win.open();
 
