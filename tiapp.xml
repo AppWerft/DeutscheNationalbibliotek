@@ -45,6 +45,7 @@
     <modules>
         <module platform="android">de.appwerft.sru</module>
         <module platform="android">com.alcoapps.actionbarextras</module>
+        <module platform="android">ti.animation</module>
     </modules>
     <deployment-targets>
         <target device="android">true</target>

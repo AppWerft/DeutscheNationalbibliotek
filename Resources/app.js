@@ -3,17 +3,22 @@ var win = Ti.UI.createWindow({
 	backgroundImage : '/assets/images/default.png'
 });
 var abx = require('com.alcoapps.actionbarextras');
+var Spinner = require('spinner')();
 var searchView = Ti.UI.Android.createSearchView({
 	hintText : "Suche …",
 	top : 0
 });
-var query='';
+var query = '';
 var nextRecord = 0;
+var loading = false;
 const onLoad = function(e) {
+	if (!loading)
+		win.remove(Spinner);
+	loading = false;
 	const response = e.searchRetrieveResponse;
-	nextRecord= response.nextRecordPosition;
+	nextRecord = response.nextRecordPosition;
 	Ti.UI.createNotification({
-		message : (response.nextRecordPosition-1)+ '/'+ response.numberOfRecords + ' Treffer',
+		message : (response.nextRecordPosition - 1) + '/' + response.numberOfRecords + ' Treffer',
 		duration : 3000
 	}).show();
 	if (!response.records.record || !response.records.record.list) {
@@ -49,36 +54,50 @@ const onLoad = function(e) {
 	listView.backgroundColor = 'white';
 };
 
+win.add(searchView);
+var listView = require('listview')();
+win.add(listView);
+
 searchView.addEventListener('submit', function() {
 	menuItem.collapseActionView();
-	query= searchView.getValue();
+	query = searchView.getValue();
 	abx.setSubtitle('Suche nach „' + query + '“');
+	win.add(Spinner);
 	DNB.searchretrieve({
 		query : query,
 		maximumRecords : 100
 	}, onLoad);
 });
 
-win.add(searchView);
-
-var listView = require('listview')();
-
-win.add(listView);
-
+searchView.addEventListener('submit', function() {
+	win.add(Spinner);
+	menuItem.collapseActionView();
+	query = searchView.getValue();
+	abx.setSubtitle('Suche nach „' + query + '“');
+	DNB.searchretrieve({
+		query : query,
+		maximumRecords : 100
+	}, onLoad);
+});
 listView.addEventListener('itemclick', function(e) {
 	console.log(e.itemId);
 });
 
 listView.addEventListener('scrollend', function(e) {
+	if (loading == true)
+		return;
 	const ndx = e.visibleItemCount + e.firstVisibleItemIndex;
-	const section= e.firstVisibleSectionIndex;
-	console.log("ndx="+ndx + '  '+ section);
-	if (ndx>1 && ndx%100 == 0)
+	const section = e.firstVisibleSectionIndex;
+	console.log("ndx=" + ndx + '  ' + section + '    ' + ndx % 100);
+	if (ndx % 100 > 50 || ndx==0) {
+		//win.add(Spinner);
+		loading = true;
 		DNB.searchretrieve({
 			query : query,
 			maximumRecords : 100,
 			startRecord : nextRecord
 		}, onLoad);
+	}
 });
 
 win.open();
