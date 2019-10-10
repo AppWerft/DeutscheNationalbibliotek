@@ -1,4 +1,7 @@
 module.exports = {
+	properties : {
+		backgroundColor : 'white'
+	},
 	childTemplates : [{// Image justified left
 		type : 'Ti.UI.ImageView', // Use an image view for the image
 		bindId : 'pic', // Maps to a custom pic property of the item data
@@ -25,7 +28,7 @@ module.exports = {
 			bindId : 'title', // Maps to a custom info property of the item data
 			properties : {// Sets the label properties
 				textAlign : 'left',
-				width:Ti.UI.FILL,
+				width : Ti.UI.FILL,
 				color : '#317DBD',
 				font : {
 					fontFamily : 'Arial',
@@ -41,7 +44,7 @@ module.exports = {
 			properties : {// Sets the label properties
 				color : '#E05D61',
 				textAlign : 'left',
-				width:Ti.UI.FILL,
+				width : Ti.UI.FILL,
 				font : {
 					fontFamily : 'Arial',
 					fontSize : '14dp'
@@ -49,21 +52,21 @@ module.exports = {
 				left : 0,
 				top : 0,
 			}
-		},{
+		}, {
 			type : 'Ti.UI.Label', // Use a label for the subtitle
 			bindId : 'publisher', // Maps to a custom es_info property of the item data
 			properties : {// Sets the label properties
 				color : '#D6CC4F',
 				textAlign : 'left',
-				width:Ti.UI.FILL,
+				width : Ti.UI.FILL,
 				font : {
 					fontFamily : 'Arial',
 					fontSize : '14dp',
-					fontStyle: 'italic'
+					fontStyle : 'italic'
 				},
 				left : 0,
 				top : 0,
 			}
 		}]
 	}]
-};
+}; 

@@ -23,7 +23,7 @@ const onLoad = function(e) {
 	}).show();
 	if (!response.records.record || !response.records.record.list) {
 		console.log(">>>>>>>>>>>");
-		listView.clear();
+		listView.clearAllSections();
 		return;
 	}
 	const items = response.records.record.list.map(function(record) {
@@ -59,6 +59,7 @@ var listView = require('listview')();
 win.add(listView);
 
 searchView.addEventListener('submit', function() {
+	listView.clearAllSections();
 	menuItem.collapseActionView();
 	query = searchView.getValue();
 	abx.setSubtitle('Suche nach „' + query + '“');

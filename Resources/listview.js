@@ -1,24 +1,20 @@
 module.exports = function() {
 	var $ = Ti.UI.createListView({
 		separatorColor : '#92CFE3',
+		//backgroundImage :  '/assets/images/bg.png',
 		templates : {
 			'template' : require('TEMPLATE')
 		},
 		defaultItemTemplate : 'template'
 	});
-	$.addSection=function(items) {
-		console.log("APPEND");
+	$.addSection = function(items) {
 		$.appendSection(Ti.UI.createListSection({
-			items: items
+			items : items
 		}));
-		
-	};
-	$.clear=function() {
-		console.log('CLEAR');
-		const c = $.getSectionCount();
-		console.log(c);
-		for (var i=0;i<c;i++)
-			$.deleteSectionAt(i);
+		};
+	$.clearAllSections = function() {
+			$.setSections([]);
+		$.backgroundImage= '/assets/images/bg.png';
 	};
 	return $;
 };

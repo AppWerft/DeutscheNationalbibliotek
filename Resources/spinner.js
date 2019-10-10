@@ -5,7 +5,7 @@ module.exports = function() {
 		pubbleParent : false,
 		zIndex : 998
 	});
-	$.add(require("ti.animation").createLottieView({
+	$.add(require("ti.animation").createAnimationView({
 		file : '/gears.json',
 		loop : true,
 		width : 320,
