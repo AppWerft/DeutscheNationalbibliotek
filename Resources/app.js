@@ -15,7 +15,12 @@ const onLoad = function(e) {
 	if (!loading)
 		win.remove(Spinner);
 	loading = false;
+	console.log(e);
 	const response = e.searchRetrieveResponse;
+	if (!response){
+		alert("Keine gültige ANtwort vom Server.");
+		return;
+	}
 	nextRecord = response.nextRecordPosition;
 	Ti.UI.createNotification({
 		message : (response.nextRecordPosition - 1) + '/' + response.numberOfRecords + ' Treffer',
@@ -59,26 +64,20 @@ var listView = require('listview')();
 win.add(listView);
 
 searchView.addEventListener('submit', function() {
-	listView.clearAllSections();
 	menuItem.collapseActionView();
 	query = searchView.getValue();
 	abx.setSubtitle('Suche nach „' + query + '“');
-	win.add(Spinner);
-	DNB.searchretrieve({
-		query : query,
-		maximumRecords : 100
-	}, onLoad);
-});
-
-searchView.addEventListener('submit', function() {
-	win.add(Spinner);
-	menuItem.collapseActionView();
-	query = searchView.getValue();
-	abx.setSubtitle('Suche nach „' + query + '“');
-	DNB.searchretrieve({
-		query : query,
-		maximumRecords : 100
-	}, onLoad);
+	if (!Ti.Network.online) {
+		Ti.UI.createNotification({
+			message : "Wegen mangelnder Internetverbindung ist keine Verbindung zur Nationalbibliothek möglich. "
+		}).show();
+	} else {
+		win.add(Spinner);
+		DNB.searchretrieve({
+			query : query,
+			maximumRecords : 100
+		}, onLoad);
+	}
 });
 listView.addEventListener('itemclick', function(e) {
 	console.log(e.itemId);
@@ -89,8 +88,7 @@ listView.addEventListener('scrollend', function(e) {
 		return;
 	const ndx = e.visibleItemCount + e.firstVisibleItemIndex;
 	const section = e.firstVisibleSectionIndex;
-	console.log("ndx=" + ndx + '  ' + section + '    ' + ndx % 100);
-	if (ndx % 100 > 50 || ndx==0) {
+	if (ndx % 100 > 50 || ndx == 0) {
 		//win.add(Spinner);
 		loading = true;
 		DNB.searchretrieve({
@@ -104,7 +102,7 @@ listView.addEventListener('scrollend', function(e) {
 win.open();
 
 const DNB = require('de.appwerft.sru').createEndpoint({
-	url : "https://services.dnb.de/sru",
+	url : "http://services.dnb.de/sru",
 	version : '1.1',
 	catalog : 'dnb',
 	recordSchema : 'oai_dc',
@@ -130,3 +128,7 @@ win.activity.onCreateOptionsMenu = function(e) {
 		showAsAction : Ti.Android.SHOW_AS_ACTION_IF_ROOM | Ti.Android.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW
 	});
 };
+
+if (!Ti.Network.online) {
+	alert("Wegen mangelnder Internetverbindung ist keine Verbindung zur Nationalbibliothek möglich. ");
+}

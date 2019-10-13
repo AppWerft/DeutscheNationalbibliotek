@@ -14,8 +14,13 @@ var loading=!1;global.loading =loading;
 const onLoad=function(e){
 loading||
 win.remove(Spinner),
-loading=!1;
+loading=!1,
+console.log(e);
 const response=e.searchRetrieveResponse;
+if(!response)
+
+return void alert("Keine g\xFCltige ANtwort vom Server.");
+
 
 
 
@@ -59,26 +64,20 @@ var listView=require("listview")();global.listView =listView,
 win.add(listView),
 
 searchView.addEventListener("submit",function(){
-listView.clearAllSections(),
 menuItem.collapseActionView(),
 query=searchView.getValue(),
 abx.setSubtitle("Suche nach \u201E"+query+"\u201C"),
-win.add(Spinner),
-DNB.searchretrieve({
-query:query,
-maximumRecords:100},
-onLoad);
-}),
+Ti.Network.online?(
 
-searchView.addEventListener("submit",function(){
+
+
+
 win.add(Spinner),
-menuItem.collapseActionView(),
-query=searchView.getValue(),
-abx.setSubtitle("Suche nach \u201E"+query+"\u201C"),
 DNB.searchretrieve({
 query:query,
 maximumRecords:100},
-onLoad);
+onLoad)):Ti.UI.createNotification({message:"Wegen mangelnder Internetverbindung ist keine Verbindung zur Nationalbibliothek m\xF6glich. "}).show();
+
 }),
 listView.addEventListener("itemclick",function(e){
 console.log(e.itemId);
@@ -88,8 +87,7 @@ listView.addEventListener("scrollend",function(e){
 if(!0==loading)
 return;const
 ndx=e.visibleItemCount+e.firstVisibleItemIndex,
-section=e.firstVisibleSectionIndex;
-console.log("ndx="+ndx+"  "+section+"    "+ndx%100),(
+section=e.firstVisibleSectionIndex;(
 50<ndx%100||0==ndx)&&(
 
 loading=!0,
@@ -104,7 +102,7 @@ onLoad));
 win.open();
 
 const DNB=require("de.appwerft.sru").createEndpoint({
-url:"https://services.dnb.de/sru",
+url:"http://services.dnb.de/sru",
 version:"1.1",
 catalog:"dnb",
 recordSchema:"oai_dc",
@@ -129,4 +127,7 @@ actionView:searchView,
 icon:"/assets/images/lupe.png",
 showAsAction:Ti.Android.SHOW_AS_ACTION_IF_ROOM|Ti.Android.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW});
 
-};
+},
+
+Ti.Network.online||
+alert("Wegen mangelnder Internetverbindung ist keine Verbindung zur Nationalbibliothek m\xF6glich. ");

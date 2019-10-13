@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="de.appwerft.dnb" android:versionCode="3" android:versionName="1.0.3">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="de.appwerft.dnb" android:versionCode="5" android:versionName="1.0.5">
 	<uses-sdk android:minSdkVersion="19" android:targetSdkVersion="28"/>
 	<application android:icon="@mipmap/ic_launcher"
 		android:label="DNB" android:name="DnbApplication" 
 		android:debuggable="false" android:usesCleartextTraffic="true" 
 		android:theme="@style/Theme.DNB"
+		android:usesCleartextTraffic="true"
 		android:resizeableActivity="true">
 		<activity android:name=".DnbActivity" android:configChanges="fontScale|keyboard|keyboardHidden|layoutDirection|locale|mcc|mnc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|touchscreen|uiMode|density" android:label="@string/app_name" android:theme="@style/Theme.Titanium" android:alwaysRetainTaskState="true">
 			<intent-filter>
